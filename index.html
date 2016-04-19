@@ -14,7 +14,8 @@
         <title>ZLTools by LangZhai(智能小菜菜)</title>
     </head>
     <body>
-        <article>
+        <article></article>
+        <script type="text/html" id="template_article">
             <header><h1>ZLTools by LangZhai(智能小菜菜)</h1></header>
             <section>
                 <h2>这是啥</h2>
@@ -36,17 +37,7 @@
             <section>
                 <h2>怎么用</h2>
                 <p>引入JS：</p>
-<pre class="language-markup"><code>&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;title&gt;ZLTools by LangZhai(智能小菜菜)&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;!--为了使页面加载更快，最好将JS放置在&lt;body&gt;的末尾--&gt;
-        &lt;script src="jquery.min.js"&gt;&lt;/script&gt;
-        &lt;script src="jquery.zltools.min.js"&gt;&lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;</code></pre>
+                <pre class="language-markup"><code>#{data.escape(data.include)}</code></pre>
             </section>
             <section>
                 <h2>在哪下</h2>
@@ -56,9 +47,11 @@
                 <p>&copy; 2013-2016 <a href="http://langzhai.github.io">LangZhai(智能小菜菜)</a></p>
                 <p>本插件基于<a href="LICENSE">LGPL开源协议</a>开发，欢迎一切非商业/商业目的使用。</p>
             </footer>
-        </article>
+        </script>
         <script src="http://langzhai.github.io/lib/jquery-1.x.min.js"></script>
         <script src="http://langzhai.github.io/lib/prism/prism.min.js"></script>
+        <script src="http://langzhai.github.io/ZLTemplate/dist/jquery.zltemplate.min.js"></script>
         <script src="dist/jquery.zltools.min.js"></script>
+        <script src="index.min.js"></script>
     </body>
 </html>
