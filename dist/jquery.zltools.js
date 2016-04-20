@@ -65,7 +65,7 @@ var params = eval({});
 
     /*placeholder兼容*/
     $.fn.placeholder = function (pColor) {
-        $(this).each(function () {
+        return $(this).each(function () {
             var $this = $(this),
                 placeholder = $this.attr('placeholder'),
                 color = $this.data('color') || $this.css('color'),
@@ -142,7 +142,7 @@ var params = eval({});
 
     /*多行文字截断*/
     $.fn.boxCut = function (maxHeight) {
-        $(this).each(function () {
+        return $(this).each(function () {
             var $this = $(this),
                 id = $this.data('id') || new Date().getTime(),
                 text;
