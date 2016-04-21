@@ -1,6 +1,6 @@
 /**
  * ZLTools
- * Date: 2016-04-19
+ * Date: 2016-04-21
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
@@ -17,6 +17,11 @@ var params = eval({});
         var param = item.split('=');
         params[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
     });
+
+    /*小数四舍五入*/
+    Math.round2 = function (num, fractionDigits) {
+        return Math.round(num * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits);
+    };
 
     /*IE8兼容Function.prototype.bind*/
     if (!Function.prototype.bind) {
@@ -41,11 +46,6 @@ var params = eval({});
         } else {
             return this.replace(reallyDo, replaceWith);
         }
-    };
-
-    /*小数四舍五入*/
-    Number.prototype.round2 = function (fractionDigits) {
-        return Math.round(this * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits);
     };
 
     /*序列化表单*/
