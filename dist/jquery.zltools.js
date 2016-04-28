@@ -1,6 +1,6 @@
 /**
  * ZLTools
- * Date: 2016-04-21
+ * Date: 2016-04-28
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
@@ -147,7 +147,7 @@ var params = eval({});
                 id = $this.data('id') || new Date().getTime(),
                 text;
             $this.data('text', $this.text()).data('id', id);
-            $window.off('.anchor' + id).on('resize.anchor' + id, function () {
+            $window.off('.boxCut' + id).on('resize.boxCut' + id, function () {
                 text = $this.data('text');
                 $this.text(text);
                 if ($this.height() > maxHeight) {
@@ -156,10 +156,25 @@ var params = eval({});
                         $this.text(text.substring(0, text.length - 1));
                     }
                     while ($this.height() > maxHeight);
-                    text = text.substring(0, text.length - 2);
+                    text = text.substring(0, text.length - 1);
                     $this.text(text + '…');
                 }
             }).triggerHandler('resize.anchor' + id);
+        });
+    };
+
+    /*输入校验*/
+    $.fn.inputCheck = function (regexp) {
+        if (!regexp instanceof RegExp) {
+            regexp = /^[\s\S]*$/;
+        }
+        return $(this).off('.inputCheck').on('keyup.inputCheck input.inputCheck', function () {
+            var $this = $(this),
+                val = $this.val();
+            while (val.length && !regexp.test(val)) {
+                val = val.substring(0, val.length - 1);
+                $this.val(val);
+            }
         });
     };
 }($));
