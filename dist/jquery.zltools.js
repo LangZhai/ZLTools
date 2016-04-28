@@ -156,7 +156,7 @@ var params = eval({});
                         $this.text(text.substring(0, text.length - 1));
                     }
                     while ($this.height() > maxHeight);
-                    text = text.substring(0, text.length - 1);
+                    text = text.substring(0, text.length - 2);
                     $this.text(text + '…');
                 }
             }).triggerHandler('resize.anchor' + id);
