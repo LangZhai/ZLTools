@@ -175,6 +175,6 @@ var params = eval({});
                 val = val.substring(0, val.length - 1);
                 $this.data('valid', false).val(val);
             }
-        });
+        }).triggerHandler('keyup.inputCheck');
     };
 }($));
