@@ -169,12 +169,12 @@ var params = eval({});
             regexp = /^[\s\S]*$/;
         }
         return $(this).off('.inputCheck').on('keyup.inputCheck input.inputCheck', function () {
-            var $this = $(this).data('valid', true),
+            var $this = $(this),
                 val = $this.val();
             while (val.length && !regexp.test(val)) {
                 val = val.substring(0, val.length - 1);
-                $this.data('valid', false).val(val);
+                $this.val(val);
             }
-        }).triggerHandler('keyup.inputCheck');
+        });
     };
 }($));
