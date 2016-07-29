@@ -1,6 +1,6 @@
 /**
  * ZLTools
- * Date: 2016-07-28
+ * Date: 2016-07-29
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
@@ -164,7 +164,7 @@ var params = eval({});
     };
 
     /*输入校验*/
-    $.fn.inputCheck = function (regexp) {
+    $.fn.inputCheck = function (regexp, timeout) {
         return $(this).each(function () {
             var $this = $(this).off('.inputCheck').on('keyup.inputCheck input.inputCheck', function () {
                     var val = $this.val();
@@ -174,7 +174,7 @@ var params = eval({});
                             val = val.substring(0, val.length - 1);
                             $this.val(val);
                         }
-                    }, 1000);
+                    }, timeout === undefined ? 1000 : timeout);
                 }),
                 check = $this.data('check');
             if (check != null) {
