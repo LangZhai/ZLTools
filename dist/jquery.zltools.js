@@ -1,6 +1,6 @@
 /**
  * ZLTools
- * Date: 2016-07-29
+ * Date: 2016-08-18
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
@@ -180,7 +180,7 @@ var params = eval({});
             if (check != null) {
                 check = new RegExp(check);
             } else {
-                if (!regexp instanceof RegExp) {
+                if (!(regexp instanceof RegExp)) {
                     regexp = /^[\s\S]*$/;
                 }
                 check = regexp;
