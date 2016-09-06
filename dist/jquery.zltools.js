@@ -47,6 +47,7 @@ var params = eval({});
     /*字符实体编码*/
     Object.encodeEntity = function (obj) {
         if (obj instanceof Object) {
+            obj = $.extend({}, obj);
             $.each(Object.keys(obj), function (i, item) {
                 obj[item] = Object.encodeEntity(obj[item]);
             });
@@ -59,6 +60,7 @@ var params = eval({});
     /*字符实体解码*/
     Object.decodeEntity = function (obj) {
         if (obj instanceof Object) {
+            obj = $.extend({}, obj);
             $.each(Object.keys(obj), function (i, item) {
                 obj[item] = Object.decodeEntity(obj[item]);
             });
