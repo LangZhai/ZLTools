@@ -60,7 +60,7 @@ var params = eval({});
     Object.decodeEntity = function (obj) {
         if (obj instanceof Object) {
             $.each(Object.keys(obj), function (i, item) {
-                obj[item] = Object.encodeEntity(obj[item]);
+                obj[item] = Object.decodeEntity(obj[item]);
             });
         } else if (typeof obj === 'string') {
             obj = obj.replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&#x27;', '\'');
