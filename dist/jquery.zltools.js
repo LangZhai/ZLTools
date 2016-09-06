@@ -18,7 +18,7 @@ var params = eval({});
         params[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
     });
 
-    /*对象属性获取*/
+    /*多级对象属性获取*/
     Object.getVal = function (obj, key) {
         $.each(key.split('.'), function (i, item) {
             obj = obj[item];
@@ -29,7 +29,7 @@ var params = eval({});
         return obj;
     };
 
-    /*对象属性赋值*/
+    /*多级对象属性赋值*/
     Object.setVal = function (obj, key, val) {
         key = key.split('.');
         $.each(key, function (i, item) {
