@@ -18,6 +18,32 @@ var params = eval({});
         params[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
     });
 
+    /*对象属性获取*/
+    Object.getVal = function (obj, key) {
+        $.each(key.split('.'), function (i, item) {
+            obj = obj[item];
+            if (obj === undefined) {
+                return false;
+            }
+        });
+        return obj;
+    };
+
+    /*对象属性赋值*/
+    Object.setVal = function (obj, key, val) {
+        key = key.split('.');
+        $.each(key, function (i, item) {
+            if (i === key.length - 1) {
+                obj[item] = typeof val === 'function' ? val(obj[item]) : val;
+                return;
+            }
+            if (obj[item] === undefined) {
+                obj[item] = {};
+            }
+            obj = obj[item];
+        });
+    };
+
     /*字符实体编码*/
     Object.encodeEntity = function (obj) {
         if (obj instanceof Object) {
@@ -45,34 +71,6 @@ var params = eval({});
     /*小数四舍五入*/
     Math.round2 = function (num, fractionDigits) {
         return Math.round(num * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits);
-    };
-
-    /*对象属性获取*/
-    Object.prototype.getVal = function (key) {
-        var obj = this;
-        $.each(key.split('.'), function (i, item) {
-            obj = obj[item];
-            if (obj === undefined) {
-                return false;
-            }
-        });
-        return obj;
-    };
-
-    /*对象属性赋值*/
-    Object.prototype.setVal = function (key, val) {
-        var obj = this;
-        key = key.split('.');
-        $.each(key, function (i, item) {
-            if (i === key.length - 1) {
-                obj[item] = typeof val === 'function' ? val(obj[item]) : val;
-                return;
-            }
-            if (obj[item] === undefined) {
-                obj[item] = {};
-            }
-            obj = obj[item];
-        });
     };
 
     /*Function.prototype.bind兼容IE8*/
