@@ -1,6 +1,6 @@
 /**
  * ZLTools
- * Date: 2016-08-18
+ * Date: 2016-09-06
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
@@ -18,12 +18,64 @@ var params = eval({});
         params[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
     });
 
+    /*字符实体编码*/
+    Object.encodeEntity = function (obj) {
+        if (obj instanceof Object) {
+            $.each(Object.keys(obj), function (i, item) {
+                obj[item] = Object.encodeEntity(obj[item]);
+            });
+        } else if (typeof obj === 'string') {
+            obj = obj.replaceAll('&', '&amp;').replaceAll('>', '&gt;').replaceAll('<', '&lt;').replaceAll('"', '&quot;').replaceAll('\'', '&#x27;');
+        }
+        return obj;
+    };
+
+    /*字符实体解码*/
+    Object.decodeEntity = function (obj) {
+        if (obj instanceof Object) {
+            $.each(Object.keys(obj), function (i, item) {
+                obj[item] = Object.encodeEntity(obj[item]);
+            });
+        } else if (typeof obj === 'string') {
+            obj = obj.replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&#x27;', '\'');
+        }
+        return obj;
+    };
+
     /*小数四舍五入*/
     Math.round2 = function (num, fractionDigits) {
         return Math.round(num * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits);
     };
 
-    /*IE8兼容Function.prototype.bind*/
+    /*对象属性获取*/
+    Object.prototype.getVal = function (key) {
+        var obj = this;
+        $.each(key.split('.'), function (i, item) {
+            obj = obj[item];
+            if (obj === undefined) {
+                return false;
+            }
+        });
+        return obj;
+    };
+
+    /*对象属性赋值*/
+    Object.prototype.setVal = function (key, val) {
+        var obj = this;
+        key = key.split('.');
+        $.each(key, function (i, item) {
+            if (i === key.length - 1) {
+                obj[item] = typeof val === 'function' ? val(obj[item]) : val;
+                return;
+            }
+            if (obj[item] === undefined) {
+                obj[item] = {};
+            }
+            obj = obj[item];
+        });
+    };
+
+    /*Function.prototype.bind兼容IE8*/
     if (!Function.prototype.bind) {
         Function.prototype.bind = function (oThis) {
             var aArgs = Array.prototype.slice.call(arguments, 1),
@@ -48,7 +100,7 @@ var params = eval({});
         }
     };
 
-    /*序列化表单*/
+    /*表单序列化*/
     $.fn.serializeObject = function () {
         var serializeObj = {};
         $.each($(this).serializeArray(), function (i, item) {
