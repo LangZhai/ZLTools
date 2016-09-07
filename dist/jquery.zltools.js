@@ -1,6 +1,6 @@
 /**
  * ZLTools
- * Date: 2016-09-06
+ * Date: 2016-09-07
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
@@ -47,9 +47,9 @@ var params = eval({});
     /*字符实体编码*/
     Object.encodeEntity = function (obj) {
         if (obj instanceof Object) {
-            obj = $.extend({}, obj);
-            $.each(Object.keys(obj), function (i, item) {
-                obj[item] = Object.encodeEntity(obj[item]);
+            obj = $.extend(obj instanceof Array ? [] : {}, obj);
+            $.each(obj, function (i, item) {
+                obj[i] = Object.encodeEntity(item);
             });
         } else if (typeof obj === 'string') {
             obj = obj.replaceAll('&', '&amp;').replaceAll('>', '&gt;').replaceAll('<', '&lt;').replaceAll('"', '&quot;').replaceAll('\'', '&#x27;');
@@ -60,9 +60,9 @@ var params = eval({});
     /*字符实体解码*/
     Object.decodeEntity = function (obj) {
         if (obj instanceof Object) {
-            obj = $.extend({}, obj);
-            $.each(Object.keys(obj), function (i, item) {
-                obj[item] = Object.decodeEntity(obj[item]);
+            obj = $.extend(obj instanceof Array ? [] : {}, obj);
+            $.each(obj, function (i, item) {
+                obj[i] = Object.decodeEntity(item);
             });
         } else if (typeof obj === 'string') {
             obj = obj.replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&#x27;', '\'');
