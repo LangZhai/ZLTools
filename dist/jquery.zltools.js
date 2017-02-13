@@ -1,7 +1,7 @@
 /**
  * ZLTools
- * Date: 2016-09-07
- * © 2016 LangZhai(智能小菜菜)
+ * Date: 2017-02-13
+ * © 2016-2017 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
  * Project home: https://github.com/LangZhai/ZLTools
@@ -52,7 +52,7 @@ var params = eval({});
                 obj[i] = Object.encodeEntity(item);
             });
         } else if (typeof obj === 'string') {
-            obj = obj.replaceAll('&', '&amp;').replaceAll('>', '&gt;').replaceAll('<', '&lt;').replaceAll('"', '&quot;').replaceAll('\'', '&#x27;');
+            obj = obj.replaceAll(/&(?!(\S(?!&))+;)/, '&amp;').replaceAll('>', '&gt;').replaceAll('<', '&lt;').replaceAll('"', '&quot;').replaceAll('\'', '&#39;');
         }
         return obj;
     };
@@ -65,7 +65,7 @@ var params = eval({});
                 obj[i] = Object.decodeEntity(item);
             });
         } else if (typeof obj === 'string') {
-            obj = obj.replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&#x27;', '\'');
+            obj = obj.replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&#39;', '\'');
         }
         return obj;
     };
