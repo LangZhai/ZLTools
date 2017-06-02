@@ -1,3 +1,3 @@
 {
-    "include": "<!DOCTYPE HTML>\r\n<html>\r\n    <head>\r\n        <title>ZLTools by LangZhai(智能小菜菜)</title>\r\n    </head>\r\n    <body>\r\n        <!--为了使页面加载更快，最好将JS放置在<body>的末尾-->\r\n        <script src=\"jquery.min.js\"></script>\r\n        <script src=\"jquery.zltools.min.js\"></script>\r\n    </body>\r\n</html>"
+    "include": "<!DOCTYPE HTML>\r\n<html>\r\n    <head>\r\n        <title>ZLTools by LangZhai(智能小菜菜)</title>\r\n    </head>\r\n    <body>\r\n        <!--为了使页面加载更快，最好将JS放置在<body>的末尾-->\r\n        <script src=\"zltools.min.js\"></script>\r\n    </body>\r\n</html>"
 }
