@@ -209,21 +209,17 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
     /*多行文字截断*/
     ZLTools.prototype.boxCut = function (maxHeight) {
         Array.prototype.forEach.call(this, function () {
-            var id = this.dataset.id || new Date().getTime(),
-                text;
+            var id = this.dataset.id || new Date().getTime();
             this.dataset.text = this.textContent;
             this.dataset.id = id;
             if (!window['boxCut' + id]) {
                 window['boxCut' + id] = (function () {
-                    text = this.dataset.text;
-                    this.textContent = text;
+                    this.textContent = this.dataset.text;
                     if (this.getBoundingClientRect().height > maxHeight) {
                         do {
-                            text = this.textContent;
-                            this.textContent = text.substring(0, text.length - 1);
+                            this.textContent = this.textContent.substring(0, this.textContent.length - 1);
                         } while (this.getBoundingClientRect().height > maxHeight);
-                        text = text.substring(0, text.length - 2);
-                        this.textContent = text + '…';
+                        this.textContent = this.textContent.substring(0, this.textContent.length - 2) + '…';
                     }
                     return arguments.callee;
                 }.bind(this)());
