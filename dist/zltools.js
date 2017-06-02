@@ -180,53 +180,56 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             },
             offset;
         self.dataset.id = id;
+        self.dataset.anchor = false;
         options = options || {};
         options.anchor = (options.anchor ? options.anchor instanceof ZLTools ? options.anchor : ZLTools(options.anchor) : this)[0];
         offset = _offset(options.anchor);
-        if (!window['anchor' + id]) {
-            window['anchor' + id] = (function () {
-                if (window.innerHeight - offset.height > 0 && pageYOffset > offset.top + (options.isBottom ? offset.height : 0)) {
-                    if (!self.dataset.anchor) {
-                        self.style.position = 'fixed';
-                        self.style.display = 'block';
-                        self.style.top = 0;
-                        self.dataset.anchor = true;
-                    }
-                } else if (self.dataset.anchor) {
-                    self.style.position = css.position;
-                    self.style.display = css.display;
-                    self.style.top = css.top;
-                    self.dataset.anchor = false;
-                    offset = _offset(options.anchor);
-                }
-                return arguments.callee;
-            }());
-            window.addEventListener('scroll', window['anchor' + id]);
-            window.addEventListener('resize', window['anchor' + id]);
+        if (window['anchor' + id]) {
+            window.removeEventListener('scroll', window['anchor' + id]);
+            window.removeEventListener('resize', window['anchor' + id]);
         }
+        window['anchor' + id] = (function () {
+            if (window.innerHeight - offset.height > 0 && pageYOffset > offset.top + (options.isBottom ? offset.height : 0)) {
+                if (self.dataset.anchor === 'false') {
+                    self.style.position = 'fixed';
+                    self.style.display = 'block';
+                    self.style.top = 0;
+                    self.dataset.anchor = true;
+                }
+            } else if (self.dataset.anchor === 'true') {
+                self.style.position = css.position;
+                self.style.display = css.display;
+                self.style.top = css.top;
+                self.dataset.anchor = false;
+                offset = _offset(options.anchor);
+            }
+            return arguments.callee;
+        }());
+        window.addEventListener('scroll', window['anchor' + id]);
+        window.addEventListener('resize', window['anchor' + id]);
         return this;
     };
 
     /*多行文字截断*/
     ZLTools.prototype.boxCut = function (maxHeight) {
-        Array.prototype.forEach.call(this, function () {
-            var self = this,
-                id = self.dataset.id || new Date().getTime();
+        Array.prototype.forEach.call(this, function (self) {
+            var id = self.dataset.id || new Date().getTime();
             self.dataset.text = self.textContent;
             self.dataset.id = id;
-            if (!window['boxCut' + id]) {
-                window['boxCut' + id] = (function () {
-                    self.textContent = self.dataset.text;
-                    if (self.getBoundingClientRect().height > maxHeight) {
-                        do {
-                            self.textContent = self.textContent.substring(0, self.textContent.length - 1);
-                        } while (self.getBoundingClientRect().height > maxHeight);
-                        self.textContent = self.textContent.substring(0, self.textContent.length - 2) + '…';
-                    }
-                    return arguments.callee;
-                }());
-                window.addEventListener('scroll', window['boxCut' + id]);
+            if (window['boxCut' + id]) {
+                window.removeEventListener('resize', window['boxCut' + id]);
             }
+            window['boxCut' + id] = (function () {
+                self.textContent = self.dataset.text;
+                if (self.getBoundingClientRect().height > maxHeight) {
+                    do {
+                        self.textContent = self.textContent.substring(0, self.textContent.length - 1);
+                    } while (self.getBoundingClientRect().height > maxHeight);
+                    self.textContent = self.textContent.substring(0, self.textContent.length - 2) + '…';
+                }
+                return arguments.callee;
+            }());
+            window.addEventListener('resize', window['boxCut' + id]);
         });
         return this;
     };
