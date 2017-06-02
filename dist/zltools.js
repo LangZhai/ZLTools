@@ -164,11 +164,12 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
 
     /*锚点绑定*/
     ZLTools.prototype.anchor = function (options) {
-        var id = this[0].dataset.id || new Date().getTime(),
+        var self = this[0],
+            id = self.dataset.id || new Date().getTime(),
             css = {
-                position: getComputedStyle(this[0]).getPropertyValue('position'),
-                display: getComputedStyle(this[0]).getPropertyValue('display'),
-                top: getComputedStyle(this[0]).getPropertyValue('top')
+                position: getComputedStyle(self).getPropertyValue('position'),
+                display: getComputedStyle(self).getPropertyValue('display'),
+                top: getComputedStyle(self).getPropertyValue('top')
             },
             _offset = function (elem) {
                 var rect = elem.getBoundingClientRect();
@@ -178,28 +179,28 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
                 };
             },
             offset;
-        this[0].dataset.id = id;
+        self.dataset.id = id;
         options = options || {};
         options.anchor = (options.anchor ? options.anchor instanceof ZLTools ? options.anchor : ZLTools(options.anchor) : this)[0];
         offset = _offset(options.anchor);
         if (!window['anchor' + id]) {
             window['anchor' + id] = (function () {
                 if (window.innerHeight - offset.height > 0 && pageYOffset > offset.top + (options.isBottom ? offset.height : 0)) {
-                    if (!this.dataset.anchor) {
-                        this.style.position = 'fixed';
-                        this.style.display = 'block';
-                        this.style.top = 0;
-                        this.dataset.anchor = true;
+                    if (!self.dataset.anchor) {
+                        self.style.position = 'fixed';
+                        self.style.display = 'block';
+                        self.style.top = 0;
+                        self.dataset.anchor = true;
                     }
-                } else if (this.dataset.anchor) {
-                    this.style.position = css.position;
-                    this.style.display = css.display;
-                    this.style.top = css.top;
-                    this.dataset.anchor = false;
+                } else if (self.dataset.anchor) {
+                    self.style.position = css.position;
+                    self.style.display = css.display;
+                    self.style.top = css.top;
+                    self.dataset.anchor = false;
                     offset = _offset(options.anchor);
                 }
                 return arguments.callee;
-            }.bind(this[0])());
+            }());
             window.addEventListener('scroll', window['anchor' + id]);
             window.addEventListener('resize', window['anchor' + id]);
         }
@@ -209,20 +210,21 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
     /*多行文字截断*/
     ZLTools.prototype.boxCut = function (maxHeight) {
         Array.prototype.forEach.call(this, function () {
-            var id = this.dataset.id || new Date().getTime();
-            this.dataset.text = this.textContent;
-            this.dataset.id = id;
+            var self = this,
+                id = self.dataset.id || new Date().getTime();
+            self.dataset.text = self.textContent;
+            self.dataset.id = id;
             if (!window['boxCut' + id]) {
                 window['boxCut' + id] = (function () {
-                    this.textContent = this.dataset.text;
-                    if (this.getBoundingClientRect().height > maxHeight) {
+                    self.textContent = self.dataset.text;
+                    if (self.getBoundingClientRect().height > maxHeight) {
                         do {
-                            this.textContent = this.textContent.substring(0, this.textContent.length - 1);
-                        } while (this.getBoundingClientRect().height > maxHeight);
-                        this.textContent = this.textContent.substring(0, this.textContent.length - 2) + '…';
+                            self.textContent = self.textContent.substring(0, self.textContent.length - 1);
+                        } while (self.getBoundingClientRect().height > maxHeight);
+                        self.textContent = self.textContent.substring(0, self.textContent.length - 2) + '…';
                     }
                     return arguments.callee;
-                }.bind(this)());
+                }());
                 window.addEventListener('scroll', window['boxCut' + id]);
             }
         });
