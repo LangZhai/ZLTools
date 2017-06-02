@@ -199,7 +199,7 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
                     offset = _offset(options.anchor);
                 }
                 return arguments.callee;
-            }.bind([this[0]])());
+            }.bind(this[0])());
             window.addEventListener('scroll', window['anchor' + id]);
             window.addEventListener('resize', window['anchor' + id]);
         }
