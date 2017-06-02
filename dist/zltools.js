@@ -165,7 +165,6 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
     /*锚点绑定*/
     ZLTools.prototype.anchor = function (options) {
         var self = this[0],
-            id = self.dataset.id || new Date().getTime(),
             css = {
                 position: getComputedStyle(self).getPropertyValue('position'),
                 display: getComputedStyle(self).getPropertyValue('display'),
@@ -179,16 +178,16 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
                 };
             },
             offset;
-        self.dataset.id = id;
+        self.dataset.id = self.dataset.id || new Date().getTime();
         self.dataset.anchor = false;
         options = options || {};
         options.anchor = (options.anchor ? options.anchor instanceof ZLTools ? options.anchor : ZLTools(options.anchor) : this)[0];
         offset = _offset(options.anchor);
-        if (window['anchor' + id]) {
-            window.removeEventListener('scroll', window['anchor' + id]);
-            window.removeEventListener('resize', window['anchor' + id]);
+        if (window['anchor' + self.dataset.id]) {
+            window.removeEventListener('scroll', window['anchor' + self.dataset.id]);
+            window.removeEventListener('resize', window['anchor' + self.dataset.id]);
         }
-        window['anchor' + id] = (function () {
+        window['anchor' + self.dataset.id] = (function () {
             if (window.innerHeight - offset.height > 0 && pageYOffset > offset.top + (options.isBottom ? offset.height : 0)) {
                 if (self.dataset.anchor === 'false') {
                     self.style.position = 'fixed';
@@ -205,21 +204,20 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             }
             return arguments.callee;
         }());
-        window.addEventListener('scroll', window['anchor' + id]);
-        window.addEventListener('resize', window['anchor' + id]);
+        window.addEventListener('scroll', window['anchor' + self.dataset.id]);
+        window.addEventListener('resize', window['anchor' + self.dataset.id]);
         return this;
     };
 
     /*多行文字截断*/
     ZLTools.prototype.boxCut = function (maxHeight) {
         Array.prototype.forEach.call(this, function (self, i) {
-            var id = self.dataset.id || new Date().getTime() + '_' + i;
+            self.dataset.id = self.dataset.id || new Date().getTime() + '_' + i;
             self.dataset.text = self.textContent;
-            self.dataset.id = id;
-            if (window['boxCut' + id]) {
-                window.removeEventListener('resize', window['boxCut' + id]);
+            if (window['boxCut' + self.dataset.id]) {
+                window.removeEventListener('resize', window['boxCut' + self.dataset.id]);
             }
-            window['boxCut' + id] = (function () {
+            window['boxCut' + self.dataset.id] = (function () {
                 self.textContent = self.dataset.text;
                 if (self.getBoundingClientRect().height > maxHeight) {
                     do {
@@ -229,7 +227,7 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
                 }
                 return arguments.callee;
             }());
-            window.addEventListener('resize', window['boxCut' + id]);
+            window.addEventListener('resize', window['boxCut' + self.dataset.id]);
         });
         return this;
     };
