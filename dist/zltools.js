@@ -212,8 +212,8 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
 
     /*多行文字截断*/
     ZLTools.prototype.boxCut = function (maxHeight) {
-        Array.prototype.forEach.call(this, function (self) {
-            var id = self.dataset.id || new Date().getTime();
+        Array.prototype.forEach.call(this, function (self, i) {
+            var id = self.dataset.id || new Date().getTime() + '_' + i;
             self.dataset.text = self.textContent;
             self.dataset.id = id;
             if (window['boxCut' + id]) {
