@@ -1,6 +1,6 @@
 /**
  * ZLTools
- * Date: 2017-06-02
+ * Date: 2017-07-01
  * © 2016-2017 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
@@ -11,8 +11,17 @@ var params = {};
 
 /*请求参数处理*/
 location.search.substr(1).split('&').forEach(function (item) {
-    var param = item.split('=');
-    params[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
+    var param = item.split('='),
+        key = decodeURIComponent(param[0]),
+        val = decodeURIComponent(param[1]);
+    if (params[key] !== undefined) {
+        if (!(params[key] instanceof Array)) {
+            params[key] = [params[key]];
+        }
+        params[key].push(val);
+    } else {
+        params[key] = val;
+    }
 });
 
 /*对象拷贝*/
