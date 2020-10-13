@@ -3,7 +3,7 @@
  * Date: 2017-07-01
  * © 2016-2017 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
- * For details, see: http://www.gnu.org/licenses/lgpl.html
+ * For details, see: https://www.gnu.org/licenses/lgpl.html
  * Project home: https://github.com/LangZhai/ZLTools
  */
 
